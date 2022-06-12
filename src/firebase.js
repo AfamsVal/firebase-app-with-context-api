@@ -5,13 +5,17 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// process.env.NODE_ENV === 'production'
+// ? process.env.REACT_APP_FLUTTERWAVE_KEY_PROD
+// : process.env.REACT_APP_FLUTTERWAVE_KEY_DEV
+
 const firebaseConfig = {
-  apiKey: "AIzaSyB8DAP0rqXMShLs1eROvbcwnrfPp0ufIEs",
-  authDomain: "fir-auth-9dac5.firebaseapp.com",
-  projectId: "fir-auth-9dac5",
-  storageBucket: "fir-auth-9dac5.appspot.com",
-  messagingSenderId: "118828674787",
-  appId: "1:118828674787:web:fdf8a0a617d7d938cedfd6",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 // Initialize Firebase

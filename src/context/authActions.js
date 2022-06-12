@@ -2,6 +2,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  GoogleAuthProvider,
+  // FacebookAuthProvider,
+  // GithubAuthProvider,
+  // TwitterAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -48,6 +53,23 @@ export const logoutAction = async (dispatch, navigate) => {
       type: "LOGOUT",
     });
     navigate("/login");
+  } catch (error) {
+    dispatch({
+      type: "AUTH_ERROR",
+      payload: error.code,
+    });
+  }
+};
+
+export const googleSignInAction = async (dispatch, navigate) => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    dispatch({
+      type: "LOGIN",
+      payload: result.user,
+    });
+    navigate("/");
   } catch (error) {
     dispatch({
       type: "AUTH_ERROR",

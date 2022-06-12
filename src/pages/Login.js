@@ -2,7 +2,11 @@ import React, { useRef, useEffect } from "react";
 import GoogleButton from "react-google-button";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
-import { clearErrorAction, loginAction } from "../context/authActions";
+import {
+  clearErrorAction,
+  googleSignInAction,
+  loginAction,
+} from "../context/authActions";
 import { useUserAuth } from "../context/GlobalState";
 
 const Login = () => {
@@ -97,9 +101,7 @@ const Login = () => {
           </form>
           <div className="mt-5">
             <GoogleButton
-              onClick={() => {
-                console.log("Google button clicked");
-              }}
+              onClick={() => googleSignInAction(dispatch, navigate)}
             />
           </div>
         </div>
