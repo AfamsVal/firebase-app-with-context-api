@@ -52,6 +52,7 @@ export const logoutAction = async (dispatch, navigate) => {
     dispatch({
       type: "LOGOUT",
     });
+    localStorage.removeItem("userInfo");
     navigate("/login");
   } catch (error) {
     dispatch({
