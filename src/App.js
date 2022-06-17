@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
 import Dashboard from "./pages/Dashboard";
+import Gallery from "./pages/gallery/Gallery";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/register" element={<Register />} />
           <Route element={<NotFound />} />
         </Routes>
