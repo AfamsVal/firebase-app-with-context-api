@@ -14,8 +14,8 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="">
-          Logo
+        <Link className="navbar-brand" to="/">
+          Firebase App
         </Link>
         <button
           className="navbar-toggler"
@@ -28,13 +28,13 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="mynavbar">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="">
-                Link
+              <Link className="nav-link" to="/">
+                Dashboard
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="">
-                Link
+              <Link className="nav-link" to="/gallery">
+                Gallery
               </Link>
             </li>
             <li className="nav-item">
