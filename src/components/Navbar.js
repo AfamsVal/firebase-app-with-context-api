@@ -5,7 +5,7 @@ import { useUserAuth } from "../context/GlobalState";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { auth, dispatch } = useUserAuth();
+  const { store, dispatch } = useUserAuth();
 
   const handleLogout = () => {
     logoutAction(dispatch, navigate);
@@ -51,7 +51,7 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            {!auth?.isAuth ? (
+            {!store?.isAuth ? (
               <ul>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">

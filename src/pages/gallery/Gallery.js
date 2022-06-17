@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { v4 } from "uuid";
 import { storage } from "../../firebase";
+import { Navigate } from "react-router-dom";
+import { useUserAuth } from "../../context/GlobalState";
 
 const POST = [
   {
@@ -20,6 +22,8 @@ const POST = [
 ];
 
 const Gallery = () => {
+  const { store } = useUserAuth();
+
   const [imagesUpload, setImagesUpload] = useState(null);
   const [posts, setPosts] = useState(POST);
   const [percentage, setPercentage] = useState(0);
@@ -61,7 +65,7 @@ const Gallery = () => {
     );
   };
 
-  return (
+  return store?.isAuth ? (
     <Layout>
       <div className="row">
         <div className="col-md-12 mt-4">
@@ -103,6 +107,8 @@ const Gallery = () => {
         </div>
       </div>
     </Layout>
+  ) : (
+    <Navigate to="/login"></Navigate>
   );
 };
 

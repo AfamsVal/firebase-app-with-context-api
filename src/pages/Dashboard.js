@@ -7,12 +7,12 @@ import { allUsersAction, deleteUserAction } from "../context/userAction";
 import ModalBox from "../components/modal/ModalBox";
 
 const Dashboard = () => {
-  const { auth, dispatch } = useUserAuth();
+  const { store, dispatch } = useUserAuth();
   const [clickedId, setClickedId] = useState(null);
 
   const {
     users: { loadingDelete },
-  } = auth;
+  } = store;
 
   useEffect(() => {
     allUsersAction(dispatch);
@@ -23,7 +23,7 @@ const Dashboard = () => {
     deleteUserAction(dispatch, id);
   };
 
-  return auth?.isAuth ? (
+  return store?.isAuth ? (
     <Layout>
       <div className="row mx-3">
         <div className="col-md-6 mx-auto p-5">
@@ -35,8 +35,8 @@ const Dashboard = () => {
           style={{ height: "70vh", overflowY: "auto" }}
         >
           <h1 className="text-capitalize mb-3">ADMIN USERS</h1>
-          {!auth?.users && <p className="my-5">Loading...</p>}
-          {auth?.users?.data?.map((user) => (
+          {!store?.users && <p className="my-5">Loading...</p>}
+          {store?.users?.data?.map((user) => (
             <div key={user.id} className="mb-3">
               <ul>
                 <li>Firstname: {user.firstName}</li>
