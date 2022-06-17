@@ -11,19 +11,19 @@ import { useUserAuth } from "../context/GlobalState";
 
 const Login = () => {
   let navigate = useNavigate();
-  const { auth, dispatch } = useUserAuth();
+  const { store, dispatch } = useUserAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
   useEffect(() => {
-    if (auth?.isAuth) {
+    if (store?.isAuth) {
       navigate("/");
       setLoading(false);
     }
-    if (auth?.errorMessage) {
-      setError({ code: auth.errorMessage });
+    if (store?.errorMessage) {
+      setError({ code: store.errorMessage });
       setLoading(false);
 
       setTimeout(() => {
@@ -31,7 +31,7 @@ const Login = () => {
         setError("");
       }, 3000);
     }
-  }, [auth, navigate, dispatch]);
+  }, [store, navigate, dispatch]);
 
   const handleLogin = () => {
     if (loading) return;

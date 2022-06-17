@@ -5,7 +5,7 @@ import { addUser } from "../../context/userAction";
 const AddUser = () => {
   const {
     dispatch,
-    auth: {
+    store: {
       users: { loading, isCompleted },
     },
   } = useUserAuth();

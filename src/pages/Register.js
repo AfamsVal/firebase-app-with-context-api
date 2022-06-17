@@ -6,19 +6,19 @@ import { useUserAuth } from "../context/GlobalState";
 
 const Register = () => {
   let navigate = useNavigate();
-  const { auth, dispatch } = useUserAuth();
+  const { store, dispatch } = useUserAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
 
   useEffect(() => {
-    if (auth.isRegSuccess) {
+    if (store.isRegSuccess) {
       navigate("/login");
       setLoading(false);
     }
-    if (auth.errorMessage) {
-      setError({ code: auth.errorMessage });
+    if (store.errorMessage) {
+      setError({ code: store.errorMessage });
       setLoading(false);
 
       setTimeout(() => {
@@ -26,7 +26,7 @@ const Register = () => {
         setError(null);
       }, 3000);
     }
-  }, [auth, navigate, dispatch]);
+  }, [store, navigate, dispatch]);
 
   const handleRegister = () => {
     if (loading) return;

@@ -6,6 +6,10 @@ import { initialState } from "./initialState";
 
 export const GlobalContext = createContext(initialState);
 
+export const useUserAuth = () => {
+  return useContext(GlobalContext);
+};
+
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
@@ -14,7 +18,9 @@ export const GlobalProvider = ({ children }) => {
       try {
         const unsub = onAuthStateChanged(auth, (data) => {
           if (data) {
-            dispatch({ type: "LOGIN", payload: data });
+            if (state.isAuth === false) {
+              return dispatch({ type: "LOGIN", payload: data });
+            }
           } else {
             dispatch({ type: "LOGOUT" });
           }
@@ -27,15 +33,11 @@ export const GlobalProvider = ({ children }) => {
       }
     };
     checkUser();
-  }, []);
+  }, [state.isAuth]);
 
   return (
-    <GlobalContext.Provider value={{ auth: state, dispatch }}>
+    <GlobalContext.Provider value={{ store: state, dispatch }}>
       {children}
     </GlobalContext.Provider>
   );
-};
-
-export const useUserAuth = () => {
-  return useContext(GlobalContext);
 };

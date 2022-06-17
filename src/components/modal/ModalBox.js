@@ -22,7 +22,7 @@ const ModalBox = ({ user }) => {
 
   const {
     dispatch,
-    auth: {
+    store: {
       users: { loadingUpdate, isUpdateCompleted },
     },
   } = useUserAuth();
