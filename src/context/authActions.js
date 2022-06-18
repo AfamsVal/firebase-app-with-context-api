@@ -7,6 +7,7 @@ import {
   // GithubAuthProvider,
   // TwitterAuthProvider,
   signInWithPopup,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -24,6 +25,17 @@ export const loginAction = async (dispatch, user) => {
     });
   }
 };
+export const forgotPwdAction = async (dispatch, email) => {
+  try {
+    return await sendPasswordResetEmail(auth, email);
+  } catch (error) {
+    console.log("error::", error.code);
+    dispatch({
+      type: "AUTH_ERROR",
+      payload: error.code,
+    });
+  }
+};
 
 export const registerAction = async (dispatch, user) => {
   try {
@@ -31,6 +43,7 @@ export const registerAction = async (dispatch, user) => {
     dispatch({
       type: "REGISTER",
     });
+    await signOut(auth);
   } catch (error) {
     dispatch({
       type: "AUTH_ERROR",

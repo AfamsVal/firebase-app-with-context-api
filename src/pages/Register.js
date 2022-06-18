@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import { clearErrorAction, registerAction } from "../context/authActions";
 import { useUserAuth } from "../context/GlobalState";
@@ -95,6 +95,9 @@ const Register = () => {
               )}
             </button>
           </form>
+          <div className="mt-3">
+            <Link to="/login">Login?</Link>
+          </div>
         </div>
       </div>
     </Layout>
