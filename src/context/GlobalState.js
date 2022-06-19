@@ -18,7 +18,7 @@ export const GlobalProvider = ({ children }) => {
       try {
         const unsub = onAuthStateChanged(auth, (data) => {
           if (data) {
-            if (state.isAuth === false) {
+            if (state.isAuth === false && state.isRegister === false) {
               return dispatch({ type: "LOGIN", payload: data });
             }
           } else {
