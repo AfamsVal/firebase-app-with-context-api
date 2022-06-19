@@ -5,10 +5,13 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-const usersCollectionRef = collection(db, "users");
+export const usersCollectionRef = collection(db, "admin");
+
+const timeStamp = serverTimestamp();
 
 export const allUsersAction = async (dispatch) => {
   try {
@@ -31,14 +34,19 @@ export const addUser = async (dispatch, user) => {
     dispatch({
       type: "ADDING_USERS",
     });
-    const data = await addDoc(usersCollectionRef, user);
+    const data = await addDoc(usersCollectionRef, {
+      ...user,
+      timeStamp,
+    });
     if (data.id) {
+      const userDoc = doc(db, "admin", data.id);
+      await updateDoc(userDoc, { id: data.id });
       dispatch({
         type: "ADD_USER",
         payload: {
           ...user,
-          id: data?.id,
-          timeStamp: data?.updateTime || new Date(),
+          id: data.id,
+          timeStamp,
         },
       });
     }
@@ -55,10 +63,8 @@ export const updateUser = async (dispatch, userDetails) => {
     dispatch({
       type: "UPDATING_USERS",
     });
-    const userDoc = doc(db, "users", userDetails.id);
+    const userDoc = doc(db, "admin", userDetails.id);
     const data = await updateDoc(userDoc, userDetails);
-    console.log("update-dddd", data);
-
     dispatch({
       type: "UPDATE_USER",
       payload: {
@@ -80,7 +86,7 @@ export const deleteUserAction = async (dispatch, userId) => {
     dispatch({
       type: "DELETING_USERS",
     });
-    const userDoc = doc(db, "users", userId);
+    const userDoc = doc(db, "admin", userId);
     const data = await deleteDoc(userDoc);
     console.log("delete-dddd", data);
     dispatch({

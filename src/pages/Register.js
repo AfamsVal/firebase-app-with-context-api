@@ -7,6 +7,7 @@ import { useUserAuth } from "../context/GlobalState";
 const Register = () => {
   let navigate = useNavigate();
   const { store, dispatch } = useUserAuth();
+  const firstNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = React.useState(false);
@@ -31,12 +32,13 @@ const Register = () => {
   const handleRegister = () => {
     if (loading) return;
     const user = {
+      firstName: firstNameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
 
-    if (!user.email || !user.password) {
-      return setError({ code: "Please enter email and password" });
+    if (!user.firstName || !user.email || !user.password) {
+      return setError({ code: "Please fill all field!" });
     } else {
       setError(null);
     }
@@ -51,6 +53,17 @@ const Register = () => {
         <div className="col-md-6 offset-md-3 mt-5 pt-5">
           <h2 className="text-center"> Register Now</h2>
           <form>
+            <div className="mb-3 mt-3">
+              <label htmlFor="email" className="form-label">
+                First Name:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter First Name"
+                ref={firstNameRef}
+              />
+            </div>
             <div className="mb-3 mt-3">
               <label htmlFor="email" className="form-label">
                 Email:
