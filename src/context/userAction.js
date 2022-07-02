@@ -41,6 +41,8 @@ export const addUser = async (dispatch, user) => {
     if (data.id) {
       const userDoc = doc(db, "admin", data.id);
       await updateDoc(userDoc, { id: data.id });
+      // if method 2: snapshot realtime listener
+      /////////////////////////comment this line/////////////////////////////
       dispatch({
         type: "ADD_USER",
         payload: {
@@ -87,8 +89,7 @@ export const deleteUserAction = async (dispatch, userId) => {
       type: "DELETING_USERS",
     });
     const userDoc = doc(db, "admin", userId);
-    const data = await deleteDoc(userDoc);
-    console.log("delete-dddd", data);
+    await deleteDoc(userDoc);
     dispatch({
       type: "DELETE_USER",
       payload: userId,

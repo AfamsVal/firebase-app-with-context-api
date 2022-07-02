@@ -5,6 +5,8 @@ import { useUserAuth } from "../context/GlobalState";
 import AddUser from "../components/add-user/AddUser";
 import { allUsersAction, deleteUserAction } from "../context/userAction";
 import ModalBox from "../components/modal/ModalBox";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Dashboard = () => {
   const { store, dispatch } = useUserAuth();
@@ -16,6 +18,32 @@ const Dashboard = () => {
 
   useEffect(() => {
     allUsersAction(dispatch);
+
+    //method 2: snapshot realtime listener
+    /////////////////////////////////////////
+    // const unsub = onSnapshot(
+    //   collection(db, "admin"),
+    //   (snapshot) => {
+    //     const data = snapshot.docs.map((doc) => ({
+    //       ...doc.data(),
+    //       id: doc.id,
+    //     }));
+    //     dispatch({
+    //       type: "ALL_USERS",
+    //       payload: data,
+    //     });
+    //   },
+    //   (error) => {
+    //     dispatch({
+    //       type: "ERROR_MSG",
+    //       payload: error.code,
+    //     });
+    //   }
+    // );
+
+    // return () => {
+    //   unsub();
+    // };
   }, [dispatch]);
 
   const deleteHandler = (id) => {
@@ -23,6 +51,17 @@ const Dashboard = () => {
     deleteUserAction(dispatch, id);
   };
 
+  console.log("online", window.navigator && window.navigator.onLine);
+  console.log("OS", window.navigator && window.navigator.operatingSystem);
+  console.log("platform", window.navigator && window.navigator.platform);
+  console.log("userAgent", window.navigator && window.navigator.userAgent);
+  console.log("vendor", window.navigator && window.navigator.vendor);
+  console.log("product", window.navigator && window.navigator.product);
+  console.log("vendorSub", window.navigator && window.navigator.vendorSub);
+  console.log("productSub", window.navigator && window.navigator.productSub);
+  console.log("appName", window.navigator && window.navigator.appName);
+  console.log("appVersion", window.navigator && window.navigator.appVersion);
+  console.log("others", window.navigator);
   return store?.isAuth ? (
     <Layout>
       <div className="row mx-3">
