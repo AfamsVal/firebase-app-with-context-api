@@ -33,7 +33,7 @@ export const GlobalProvider = ({ children }) => {
       }
     };
     checkUser();
-  }, [state.isAuth]);
+  }, [state.isAuth, state.isRegister]);
 
   return (
     <GlobalContext.Provider value={{ store: state, dispatch }}>

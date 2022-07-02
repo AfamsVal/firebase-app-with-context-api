@@ -21,7 +21,7 @@ const POST = [
   },
 ];
 
-const Gallery = () => {
+const Multiple = () => {
   const { store } = useUserAuth();
 
   const [imagesUpload, setImagesUpload] = useState(null);
@@ -29,41 +29,43 @@ const Gallery = () => {
   const [percentage, setPercentage] = useState(0);
 
   const uploadImages = () => {
-    if (imagesUpload === null) return;
-    // const fileName = new Date().getTime() + imagesUpload.name
-    const imageRef = ref(storage, `images/${v4() + imagesUpload.name}`);
-    const uploadTask = uploadBytesResumable(imageRef, imagesUpload);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+    if (!imagesUpload.length) return;
+    for (let i = 0; i < imagesUpload.length; i++) {
+      // const fileName = new Date().getTime() + imagesUpload.name
+      const imageRef = ref(storage, `images/${v4() + imagesUpload[i].name}`);
+      const uploadTask = uploadBytesResumable(imageRef, imagesUpload[i]);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
 
-        setPercentage(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(imageRef)
-          .then((url) => {
-            console.log("Image uploaded");
-            setPosts((prevPosts) => [
-              ...prevPosts,
-              {
-                id: prevPosts.length + 1,
-                title: "New Post",
-                body: "This is post 3",
-                image: url,
-              },
-            ]);
-          })
-          .catch((err) => {
-            console.log("Err url::", err);
-          });
-      }
-    );
+          setPercentage(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(imageRef)
+            .then((url) => {
+              console.log("Image uploaded");
+              setPosts((prevPosts) => [
+                ...prevPosts,
+                {
+                  id: prevPosts.length + 1,
+                  title: "New Post",
+                  body: "This is post 3",
+                  image: url,
+                },
+              ]);
+            })
+            .catch((err) => {
+              console.log("Err url::", err);
+            });
+        }
+      );
+    }
   };
 
   return store?.isAuth ? (
@@ -78,8 +80,9 @@ const Gallery = () => {
                 <label className="d-block mb-2">Please select file:</label>
                 <input
                   type="file"
+                  multiple
                   className="form-control-file border"
-                  onChange={(e) => setImagesUpload(e.target.files[0])}
+                  onChange={(e) => setImagesUpload(e.target.files)}
                 />
                 <div className="mt-3">
                   <button className="btn btn-info" onClick={uploadImages}>
@@ -113,4 +116,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default Multiple;
